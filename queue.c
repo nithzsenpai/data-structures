@@ -1,26 +1,30 @@
-#include<stdio.h>
-void insert(int *a[],int *front,int *rear,int max,int a1)
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5
+
+void insert(int *a[MAX],int *front,int *rear,int a1)
 
 {
 
-    if(*rear>=max)
+    if(*rear>=MAX)
     printf("queue full");
     else if(*rear==-1 || *front==-1)
     {
         *front=*rear=0;
-        *a[*rear]=a1;
+     *a[*rear]=a1;
 
     }
     else{
         *rear++;
-        *a[*rear]=a1;
+         *a[*rear]=a1;
     }
 }
 
-int delete1(int *a[],int *front,int *rear,int max)
+int delete1(int *a[MAX],int *front,int rear)
 {
     int val;
-    if(*front=*rear==-1 || *front=*rear)
+    if(*front=rear==-1 || *front==rear)
     {
         printf("stack is empty");
     }
@@ -31,15 +35,15 @@ int delete1(int *a[],int *front,int *rear,int max)
     }
 }
 
-void display(int *a[],int *front,int *rear,int max)
+void display(int *a[MAX],int front,int rear)
 
 {int i;
-    if(*front=*rear==-1 ||*front==*rear==max)
+    if(front=rear==-1 ||front==rear==MAX)
     {
         printf("stack is empty");
     }
     else
-    for(i=*front;i<=*rear;i++)
+    for(i=front;i<=rear;i++)
     {
         printf("element is %d",*a[i]);
     }
@@ -64,17 +68,17 @@ while(1)
     switch(choice)
     {
         case 1:
-        {insert(&q[max],&front,&rear,max,val);
+        {insert(&q[MAX],&front,&rear,val);
         break;}
 
         case 2:
         {
-            delete1(&q[max],&front,&rear,max);
+            delete1(&q[MAX],&front,rear);
             break;
         }
         case 3:
         {
-            display(&q[max],&front,&rear,max);
+            display(q[MAX],front,rear);
             break;
         }
         case 4:
@@ -88,7 +92,6 @@ while(1)
 
     }
     return 0;
+    
+    
 }
-
-
-
