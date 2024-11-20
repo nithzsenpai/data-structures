@@ -15,7 +15,7 @@ struct node*create(int value)
     return new;
 }
 
-void insertfront(struct node**head,struct node**prev,int value)
+struct node* insertfront(struct node**head,int value)
 
 {
 
@@ -26,10 +26,12 @@ void insertfront(struct node**head,struct node**prev,int value)
     else
     {
         new->next=*head;
-        temp->next->prev=new;
+        temp->prev=new;
+        *head=new;
     }
+    return new;
 }
-void insertleft(struct node **head,struct node**prev,int valuesearch,int value)
+struct node *insertleft(struct node **head,int valuesearch,int value)
 {
     struct node*new=create(value);
     struct node*temp=*head;
@@ -41,36 +43,42 @@ void insertleft(struct node **head,struct node**prev,int valuesearch,int value)
             temp->prev=new;
             new->next=temp;
             *head=new;
+            break;
 
         }
         else if(temp->data==valuesearch && temp!=*head)
         {
-            temp->prev=new;
+            
             new->next=temp;
             new->prev=temp->prev;
+            temp->prev->next=new;
+            temp->prev=new;
+            break;
         }
         else
         {
             temp=temp->next;
         }
    }
+   return new;
 }
 
-void deletevalue(struct node**head,struct node**prev,int valuesearch)
+struct node* deletevalue(struct node**head,int valuesearch)
 {
     struct node*temp=*head;
     while(temp!=NULL)
     {
         if(temp->data==valuesearch && temp==*head)
         {
-            *head=temp->next;
-            temp->next->prev=NULL;
+            *head=NULL;
+            
             free(temp);
         }
         else if(temp->data==valuesearch && temp!=*head)
         {
             temp->prev->next=temp->next;
             temp->next->prev=temp->prev;
+            free(temp);
 
 
         }
@@ -85,6 +93,7 @@ void deletevalue(struct node**head,struct node**prev,int valuesearch)
         }
 
     }
+return *head;
 }
 void print1(struct node**head)
 {
@@ -92,7 +101,7 @@ void print1(struct node**head)
     while(temp!=NULL)
     {
 
-        printf("%d\n",temp->data);
+        printf("->%d",temp->data);
         temp=temp->next;
     }
 
@@ -103,53 +112,54 @@ int main()
 {
     struct node*head=NULL;
     struct node*prev=NULL;
-    int option=0,valuesearch,value;
+    int option=0,valuesearch1,value1,valuesearch2,value2;
+
 
    
-    printf("original list :\n");
-    insertfront(&head,&prev,1);
-    insertfront(&head,&prev,2);
-    insertfront(&head,&prev,4);
-    print1(&head);
 
 
-
-
-         printf("menu:\n 1)insert left of specific node\n2)delete a specific value\n3)exit\n");
+         printf("menu:\n1)insert left of specific node\n2)delete a specific value\n3)insert a node\n4)display\n");
 
         int choice;
-        while(option!=1)
-      {
+        
+      
 
-
+      do{
           printf("enter a choice:\n");
           scanf("%d",&choice);
-          do{
+          
             switch(choice)
            {
 
             case 1:
             {
                 printf("enter a value:\n");
-                scanf("%d",&value);
+                scanf("%d",&value1);
                 printf("enter value next to which to be inserted:\n");
-                scanf("%d",&valuesearch);
-                insertleft(&head,&prev,valuesearch,value);
-
+                scanf("%d",&valuesearch1);
+                insertleft(&head,valuesearch1,value1);
                 break;
             }
             case 2:
             {
                 printf("enter a value to be deleted:\n");
-                scanf("%d",&valuesearch);
-                deletevalue(&head,&prev,valuesearch);
+                scanf("%d",&valuesearch2);
+                deletevalue(&head,valuesearch2);
                 printf("value deleted!!\n");\
                 break;
 
             }
             case 3:
             {
-                printf("exit point\n");
+                printf("enter a value:\n");
+                scanf("%d",&value2);
+                insertfront(&head,value2);
+                break;
+            }
+            case 4:
+            {
+                printf("elements present are:\n");
+                print1(&head);
                 break;
             }
 
@@ -157,6 +167,6 @@ int main()
 
 
       }while(choice!=6);
-    }
-    return 0;
+    
+   
 }
