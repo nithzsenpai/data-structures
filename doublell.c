@@ -105,10 +105,11 @@ int main()
     struct node*prev=NULL;
     int option=0,valuesearch,value;
 
+   
+    printf("original list :\n");
     insertfront(&head,&prev,1);
     insertfront(&head,&prev,2);
     insertfront(&head,&prev,4);
-    printf("original list :\n");
     print1(&head);
 
 
