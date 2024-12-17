@@ -1,12 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 5 
-
+#define MAX 3 // Size of the queue
+// Function to check if the queue is full
+int isFull(int front, int rear) {
+return (front == (rear + 1) % MAX);
+}
+// Function to check if the queue is empty
+int isEmpty(int front) {
+return front == -1;
+}
+// Function to insert an element in the queue (enqueue)
 void enqueue(int queue[], int *front, int *rear, int value) {
-if (front == (rear + 1) % MAX) {
+if (isFull(*front, *rear)) {
 printf("Queue is full!\n");
 } else {
-if (*front == -1) 
+if (*front == -1) // First insertion
 *front = 0;
 *rear = (*rear + 1) % MAX;
 queue[*rear] = value;
@@ -14,12 +22,13 @@ printf("Inserted %d\n", value);
 }
 }
 
+// Function to remove an element from the queue (dequeue)
 void dequeue(int queue[], int *front, int *rear) {
-if ( *front == -1) {
+if (isEmpty(*front)) {
 printf("Queue is empty!\n");
 } else {
 printf("Deleted %d\n", queue[*front]);
-if (*front == *rear) { 
+if (*front == *rear) { // Queue has only one element
 
 *front = -1;
 *rear = -1;
@@ -30,7 +39,7 @@ if (*front == *rear) {
 }
 // Function to display the queue
 void display(int queue[], int front, int rear) {
-if ( front == -1) {
+if (isEmpty(front)) {
 printf("Queue is empty!\n");
 } else {
 printf("Queue elements are: ");
@@ -39,10 +48,10 @@ while (i != rear) {
 printf("%d ", queue[i]);
 i = (i + 1) % MAX;
 }
-printf("%d\n", queue[i]);
+printf("%d\n", queue[i]); // Display last element
 }
 }
-
+// Main function to drive the menu using switch-case
 int main() {
 int queue[MAX];
 int front = -1, rear = -1;
@@ -50,11 +59,11 @@ int choice, value;
 
 while (1) {
 printf("\nCircular Queue Menu:\n");
-printf("1. Enqueue\n");
-printf("2. Dequeue\n");
+printf("1. Enqueue ");
+printf("2. Dequeue ");
 
-printf("3. Display\n");
-printf("4. Exit\n");
+printf("3. Display ");
+printf("4. Exit ");
 printf("Enter your choice: ");
 scanf("%d", &choice);
 
@@ -84,3 +93,4 @@ printf("Invalid choice! Please try again.\n");
 }
 return 0;
 }
+
