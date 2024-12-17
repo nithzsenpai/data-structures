@@ -1,7 +1,6 @@
 #include<stdio.h>
-
-
-void push(int ele,int stack[],int *top,int n){
+#define n 5
+void push(int ele,int stack[],int *top){
     if(*top == n-1){
         printf(" OVERFLOW \n");
     }
@@ -28,7 +27,7 @@ void display(int stack[],int *top){
         printf("the stack is empty \n");
     }
     else{
-        for(int i=0;i<=*top;i++){
+        for(int i=*top;i<=0;i--){
             printf("%d \n",stack[i]);
         }
     }
@@ -36,7 +35,7 @@ void display(int stack[],int *top){
 
 int main()
 {
-    int option, val;
+    int opt, val,stack[n],top=-1;
     while (1)
     {
         printf("\n\n1=Push\t2=Pop\t3=Display\t4=Exit");
@@ -49,17 +48,17 @@ int main()
             {
                 printf("Enter Push Element: ");
                 scanf("%d", &val);
-                push(val);
+                push(val,stack,&top);
                 break;
             }
             case 2:
             {
-                pop();
+                pop(stack,&top);
                 break;
             }
             case 3:
             {
-                display();
+                display(stack,&top);
                 break;
             }
             case 4:
@@ -73,3 +72,5 @@ int main()
     }
     return 0;
 }
+
+
